@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Check Leave Balance</title>
+</head>
+<body>
+    <h1>Check Your Available Leaves</h1>
+    <form id="leaveForm">
+        <label>Enter User ID:</label>
+        <input type="text" id="userId" required>
+        <button type="submit">Check Balance</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("leaveForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const userId = document.getElementById("userId").value;
+
+            fetch(`/leaves/balance/${userId}`)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("result").innerHTML = data;
+                })
+                .catch(error => {
+                    document.getElementById("result").innerHTML = "Error fetching data.";
+                });
+        });
+    </script>
+</body>
+</html>
